@@ -39,23 +39,25 @@ void swapColor(Node x){
     x->parent->color = black; grandfather(x)->color = red;
 }
 
-void leftRotation(Node x){
+void leftRotation(Node &x){
     Node temp = x;
     x = x->right;
     temp->right = x->left;
     x->left = temp;
     x->parent = temp->parent;
     temp->parent = x;
+    if (temp->right)
     temp->right->parent = temp;
 }
 
-void rightRotation(Node x){
+void rightRotation(Node &x){
     Node temp = x;
     x = x->left;
     temp->left = x->right;
     x->right = temp;
     x->parent = temp->parent;
     temp->parent = x;
+    if (temp->left)
     temp->left->parent = temp;
 }
 
@@ -67,12 +69,18 @@ void Insert(Node &root, int age){
         if(x == root){x->color = black; return;}
         if(x->parent->color == black){return;}
         if(x->parent->color == red){
-            
+
             if(uncle(x) == NULL || uncle(x)->color == black){
                 if(grandfather(x)->left == x->parent){
                     //Case 1: LL rotation
                     if (x->parent->left == x){
-                        swapColor(x); rightRotation(grandfather(x));
+                        swapColor(x); 
+                        if (!x->parent->parent->parent)
+                            rightRotation(root);
+                        else if (grandfather(x) == grandfather(x)->parent->left)
+                            rightRotation(grandfather(x)->parent->left);
+                        else
+                            rightRotation(grandfather(x)->parent->right);
                         break;
                     }
                     //Case 2: LR rotation
@@ -83,7 +91,13 @@ void Insert(Node &root, int age){
                 } else {
                     //Case 3: RR rotation
                     if (x->parent->right == x){
-                        swapColor(x); leftRotation(grandfather(x));
+                        swapColor(x);
+                        if (!x->parent->parent->parent)
+                            leftRotation(root);
+                        else if (grandfather(x) == grandfather(x)->parent->left)
+                            leftRotation(grandfather(x)->parent->left);
+                        else
+                            leftRotation(grandfather(x)->parent->right);
                         break;
                     }
                     //Case 4: RL rotation
