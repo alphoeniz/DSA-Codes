@@ -141,7 +141,7 @@ int main(){
     Insert(root, 23);
     Insert(root, 15);
     Insert(root, 11);
-    Search(root,23);
-    Search(root,17);
+    Search(root, 23);
+    Search(root, 17);
     inorder(root); cout<<endl; return 0;
 }
