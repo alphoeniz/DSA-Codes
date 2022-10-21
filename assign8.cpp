@@ -114,9 +114,10 @@ void Insert(Node &root, int age){
 }
 
 void Search(Node root, int age){
-    if(root == NULL) return;
+    if(root == NULL){cout<<"Such node does not exist!!!"<<endl; return;}
     else if(age == root->age){
             cout<<"Age: "<<root->age<<endl;
+            return;
     }
     else if(age<root->age) Search(root->left,age);
     else Search(root->right,age);
@@ -140,5 +141,7 @@ int main(){
     Insert(root, 23);
     Insert(root, 15);
     Insert(root, 11);
+    Search(root,23);
+    Search(root,17);
     inorder(root); cout<<endl; return 0;
 }
